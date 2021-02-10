@@ -22,10 +22,11 @@ stdize_col <- function(dataframe, pattern, new_col){
 }
 
 data_dir <- "\\\\psychodrama2.univ.pitt.edu\\Studies\\Girls Brain\\Tobii Glasses\\Raw Data\\T1 Speech Task Reexported for Mary"
+output_dir <-"C:\\Users\\emily\\OneDrive\\Documents\\FEND\\FEND Lab Tasks"
 #data_dir <- "C:\\Users\\mtr22\\Code\\FEND-LAb-Tasks\\data"
 
-example_data_file <- read_xlsx(file.path(data_dir, "22206 GIRLS T1D2 Child Data Export.xlsx"))
-ls(example_data_file)
+#example_data_file <- read_xlsx(file.path(data_dir, "22206 GIRLS T1D2 Child Data Export.xlsx"))
+#ls(example_data_file)
 
 # list the data files in data directory
 data_files <- list.files(data_dir)
@@ -72,7 +73,12 @@ count_not_na <- function(x) {
 agg_df <- group_by(combined_df, subject) %>% 
   summarise_if(is.numeric, count_not_na)
 
+agg_df$pct_gp_manually_corrected_x <- (agg_df$manual_map_x/agg_df$gaze_final_x)*100
+agg_df$pct_gp_manually_corrected_y <- (agg_df$manual_map_y/agg_df$gaze_final_y)*100
 print(agg_df)
+assert(all(agg_df$pct_gp_manually_corrected_x == agg_df$pct_gp_manually_corrected_y))
+
+write.csv(agg_df, file.path(output_dir, "Tobii Processing Percent Corrected.csv"))
 
 ##### matt: this is where I left off ######
 
