@@ -64,19 +64,25 @@ colnames(combined_df)
 unique(combined_df$subject)
 group_by(combined_df, subject) %>% count()
 
-group_by(combined_df, subject) %>% summarise_if(is.numeric)
-group_by(combined_df, subject) %>% sum(!is.na(combined_df$manual_map_x))
+count_not_na <- function(x) {
+  return(sum(!is.na(x)))
+}
 
-agg_df <- group_by(combined_df, subject) %>% sum(!is.na(combined_df$manual_map_x))
+# count the total number of non-missing values in each column, per subject
+agg_df <- group_by(combined_df, subject) %>% 
+  summarise_if(is.numeric, count_not_na)
 
+print(agg_df)
 
-t=
+##### matt: this is where I left off ######
 
-# Summing all rows with values - working 
-man_map_x_count = sum(!is.na(combined_df$manual_map_x)) # Manually mapped X
-man_map_y_count = sum(!is.na(tobii_22001$manual_map_y)) # Manually mapped Y
-gaze_point_x_count = sum(!is.na(tobii_22001$gaze_point_map_x)) # Manually mapped X
-gaze_point_y_count = sum(!is.na(tobii_22001$gaze_point_map_y)) # Manually mapped Y
-
-tobii <- tobii_22001 %>%
-  tobii$man_map_x_count = sum(!is.na(tobii_22001$manual_map_x))
+if (false) {
+  # Summing all rows with values - working 
+  man_map_x_count = sum(!is.na(combined_df$manual_map_x)) # Manually mapped X
+  man_map_y_count = sum(!is.na(tobii_22001$manual_map_y)) # Manually mapped Y
+  gaze_point_x_count = sum(!is.na(tobii_22001$gaze_point_map_x)) # Manually mapped X
+  gaze_point_y_count = sum(!is.na(tobii_22001$gaze_point_map_y)) # Manually mapped Y
+  
+  tobii <- tobii_22001 %>%
+    tobii$man_map_x_count = sum(!is.na(tobii_22001$manual_map_x))
+}
