@@ -30,5 +30,5 @@ for d in os.listdir(base_dir):
 		if os.path.isdir(source_path) and not os.path.isdir(dest_path):
 			print(source_path, dest_path)
 
-			# Copy files contined in full source path to new destination folder
+			# Copy files contained in full source path to new destination folder
 			shutil.copytree(source_path, dest_path)
